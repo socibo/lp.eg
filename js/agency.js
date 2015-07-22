@@ -26,3 +26,9 @@ $('.navbar-collapse ul li a').click(function() {
 });
 
 
+$('.eg').hide();
+
+
+window.toggleArabic = function() {
+    $('.eg').toggle();
+}
