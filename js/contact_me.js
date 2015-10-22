@@ -32,7 +32,7 @@ $(function() {
 	    data.merge_fields.FNAME = fName;
 		    
             $.ajax({
-                url: "https://us11.mailchimp.com/3.0/lists/c3155840a1/members/",
+                url: "http://us11.mailchimp.com/3.0/lists/c3155840a1/members/",
                 type: "POST",
 		username: 'anystring',
 		passoword: '437552b96efa87eab0a786dc63d66a06-us11',
