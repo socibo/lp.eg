@@ -8,26 +8,35 @@ $(function() {
         submitSuccess: function($form, event) {
             event.preventDefault(); // prevent default submit behaviour
             // get values from FORM
-            var name = $("input#name").val();
-            var email = $("input#email").val();
-            var phone = $("input#phone").val();
-            var hotelName = $("input#hotel_name").val();
-            var message = $("textarea#message").val();
-            var firstName = name; // For Success/Failure Message
+	    var name = $("input#name").val(),
+		fName, lName,
+		data = {
+                    email_address: $("input#email").val(),
+		    status: 'subscribed',
+		    merge_fields: {
+			FNAME: fName,
+			LNAME: lName,
+			PHONE: $("input#phone").val(),
+			FB_PAGE_URL: $("input#fb_page_url").val(),
+			MSG: $("input#message").val()
+		    }
+		};
+
             // Check for white space in name for Success/Fail message
-            if (firstName.indexOf(' ') >= 0) {
-                firstName = name.split(' ').slice(0, -1).join(' ');
-            }
+            if (name.indexOf(' ') >= 0) {
+                fName = name.split(' ').slice(0, -1).join(' ');
+		
+            } else {
+		fName = name;
+	    }
+	    data.merge_fields.FNAME = fName;
+		    
             $.ajax({
-                url: "././mail/contact_me.php",
+                url: "htts://us11.mailchimp.com/3.0/lists/c3155840a1/members/",
                 type: "POST",
-                data: {
-                    name: name,
-                    phone: phone,
-                    email: email,
-		    hotelName: hotelName,
-                    message: message
-                },
+		username: 'anystring',
+		passoword: '437552b96efa87eab0a786dc63d66a06-us11',
+                data: data,
                 cache: false,
                 success: function() {
                     // Success message
@@ -47,7 +56,7 @@ $(function() {
                     $('#success').html("<div class='alert alert-danger'>");
                     $('#success > .alert-danger').html("<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;")
                         .append("</button>");
-                    $('#success > .alert-danger').append("<strong>Sorry " + firstName + ", it seems that my mail server is not responding. Please try again later!");
+                    $('#success > .alert-danger').append("<strong>Sorry " + fName + ", it seems that Socibo mail server is not responding. Please try again later!");
                     $('#success > .alert-danger').append('</div>');
                     //clear all fields
                     $('#contactForm').trigger("reset");
